@@ -1,6 +1,6 @@
 本项目是用于测试使用：
 
-本项目基于Arsuino uno 的智能点餐系统
+本项目基于Arsuino uno 的智能点餐系统 的从机设备
 
 增加修改项：xxxxxxxS
 
