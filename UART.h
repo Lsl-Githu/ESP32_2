@@ -60,52 +60,52 @@ void mqttCheckConnect()
 //组数据帧并发送
 void mqttIntervalPost()
 {  
-  static char count_time=0;
-    char param[50];
-    char jsonBuf[150];
-switch(State)
-{
-case 0:break;
-case 1:
-{
-  Contr=0;
-//清除
-  memset(param,0,50);
-  memset(jsonBuf,0,150);
-  for(char i=1;i<9;i++)  
+  static char count_time = 0;
+  char param[50];
+  char jsonBuf[150];
+  switch (State)
   {
-     sprintf(param, "{\"flag%d\":%d,\"kw%d\":\"%s\",\"num%d\":%d}",i,Contr,i,kouwei[0],i,0);
-     sprintf(jsonBuf, ALINK_BODY_FORMAT, param);
-     Serial.println(jsonBuf);
-     client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
-     delay(100);
-  }
-  State=2;
-}break;
-
-case 2:
-{
-  memset(param,0,50);
-  memset(jsonBuf,0,150);
-  Contr=1;
- count_time++;
- if(count_time>=30)
- {
-    count_time=0;
-     for(char i=0;i<ge_fg;i++)  
+  case 0:break;
+  case 1:
+  {
+    Contr = 0;
+  //清除
+    memset(param, 0, 50);
+    memset(jsonBuf, 0, 150);
+    for(char i = 1; i < 9; i++)  
     {
-     sprintf(param, "{\"xs\":%d,\"flag%d\":%d,\"kw%d\":\"%s\",\"num%d\":%d}",arr1[i].Id+1,arr1[i].Id+1,Contr,arr1[i].Id+1,kouwei[arr1[i].kou],arr1[i].Id+1,arr1[i].num);
-     sprintf(jsonBuf, ALINK_BODY_FORMAT, param);
-     Serial.println(jsonBuf);
-     client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
-     delay(2000);
+       sprintf(param, "{\"flag%d\":%d,\"kw%d\":\"%s\",\"num%d\":%d}",i,Contr,i,kouwei[0],i,0);
+       sprintf(jsonBuf, ALINK_BODY_FORMAT, param);
+       Serial.println(jsonBuf);
+       client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
+       delay(100);
     }
-    ge_fg=0;
-    State=0;
- }
-}break;
-
-}
+    State=2;
+  }break;
+  
+  case 2:
+  {
+    memset(param, 0, 50);
+    memset(jsonBuf, 0, 150);
+    Contr = 1;
+   count_time++;
+   if(count_time >= 30)
+   {
+      count_time = 0;
+       for (char i = 0; i < ge_fg; i++)  
+      {
+       sprintf(param, "{\"xs\":%d,\"flag%d\":%d,\"kw%d\":\"%s\",\"num%d\":%d}",arr1[i].Id+1,arr1[i].Id+1,Contr,arr1[i].Id+1,kouwei[arr1[i].kou],arr1[i].Id+1,arr1[i].num);
+       sprintf(jsonBuf, ALINK_BODY_FORMAT, param);
+       Serial.println(jsonBuf);
+       client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
+       delay(2000);
+      }
+      ge_fg = 0;
+      State = 0;
+   }
+  }break;
+  
+  }
    
 }
 
